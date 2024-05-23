@@ -8,48 +8,6 @@ class CustomException(Exception):
         self.name = name
         self.status_code = status_code
 
-""" async def custom_exception_handler(request: Request, exc: Exception):
-    if isinstance(exc, StarletteHTTPException):
-        status_code = exc.status_code
-    elif isinstance(exc, CustomException):
-        status_code = exc.status_code
-    else:
-        status_code = 500
-
-    valid_status_codes = [
-        100, 101, 102, 200, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303, 304,
-        305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 408, 409, 410, 411, 412,
-        413, 414, 415, 416, 417, 418, 420, 421, 422, 423, 424, 425, 426, 429, 431,
-        444, 450, 451, 499, 500, 501, 502, 503, 504, 506, 507, 508, 509, 510, 511,
-        599
-    ]
-
-    if status_code not in valid_status_codes:
-        status_code = 500  # Default to 500 if the status code is not valid
-
-    return RedirectResponse(url=f"https://http.cat/{status_code}")  
- """
-""" async def custom_exception_handler(request: Request, exc: Exception):
-    if isinstance(exc, StarletteHTTPException):
-        status_code = exc.status_code
-    elif isinstance(exc, HTTPException):
-        status_code = exc.status_code
-    else:
-        status_code = 500
-
-    valid_status_codes = [
-        100, 101, 102, 200, 201, 202, 203, 204, 206, 207, 300, 301, 302, 303, 304,
-        305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 408, 409, 410, 411, 412,
-        413, 414, 415, 416, 417, 418, 420, 421, 422, 423, 424, 425, 426, 429, 431,
-        444, 450, 451, 499, 500, 501, 502, 503, 504, 506, 507, 508, 509, 510, 511,
-        599
-    ]
-
-    if status_code not in valid_status_codes:
-       status_code = 500  # Default to 500 if the status code is not valid
-
-    return RedirectResponse(url=f"https://http.cat/{status_code}")
- """
 async def custom_exception_handler(request: Request, exc: CustomException):
     
     valid_status_codes = [
