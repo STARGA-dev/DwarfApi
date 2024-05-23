@@ -1,7 +1,16 @@
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter, FastAPI , HTTPException, status
+
+from fastapi.responses import JSONResponse, RedirectResponse
+
 import random
+
 from pydantic import BaseModel
+
 from ENANOS import FemaleDwarf, MaleDwarf
+
+from custom_exceptions import CustomException, custom_exception_handler
+
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 class SurnameModel(BaseModel):
     surname: str
@@ -23,9 +32,22 @@ app = FastAPI()
 app.include_router(MaleDwarf.router)
 app.include_router(FemaleDwarf.router)
 
+app.add_exception_handler(CustomException, custom_exception_handler)
+""" app.add_exception_handler(StarletteHTTPException, custom_exception_handler)
+app.add_exception_handler(HTTPException, custom_exception_handler)
+app.add_exception_handler(Exception, custom_exception_handler) 
+ """
+
+@app.get("/cause_error")
+async def cause_error():
+    # Este endpoint simplemente causa un error para demostrar el manejo de excepciones
+    raise HTTPException(status_code=422, detail="Intentional error for demonstration purposes")
 @app.get("/generate/dwarf/surname")
 async def generate_surname():
+
     return {"surname": generate_dwarf_surname()}
+ 
 @app.post("/generate/dwarf/surname")
 async def post_surname(surname: SurnameModel):
     return {"surname": surname.surname}
+
